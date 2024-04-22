@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+CLI --"1" Directory
+
+CLI ..> File
+
+Directory "0..*" --* " " Directory
+
+File "0..*" --* " " Directory
+
+
+'class Cli {
+'Directory
+'cd(String name) 切換路徑(.. , name)
+'size() 當前目錄下的所有檔案記憶體大小
+'}
+
+class CLI {
++ start() : void
+}
+
+class Directory {
+- directoryName : String{A-Za-Z0-0.-}
+String pwd
+List<FileT> list
++ addDirectory(d : Directory) : void
++ addFile(f : File) : void
++ getDirectory(name:String) : Directory[0..1]
++ getFile(name:String) : File[0..1]
++ totalBytes() : long
++ cd(String name) 切換路徑(.. , name)
+}
+note right: 只有Root 可以沒有parent \n totalBytes拿回所有目錄下檔案的byte大小
+
+
+class File{
+- fileName : fileName
+- content : byte[*]
++ bytes() : long
+}
+note right: bytes()該檔案大小
+
+
+@enduml
